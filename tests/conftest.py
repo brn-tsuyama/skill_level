@@ -5,12 +5,14 @@ Shared pytest fixtures.
 from __future__ import annotations
 
 import zipfile
+from collections.abc import Generator
 from typing import Any
 
 import duckdb
 import pytest
 
 from skill_level import database
+from skill_level.mlit import database as mlit_database
 from skill_level.parser._models import _Sheet
 
 # ---------------------------------------------------------------------------
@@ -19,10 +21,19 @@ from skill_level.parser._models import _Sheet
 
 
 @pytest.fixture
-def conn() -> duckdb.DuckDBPyConnection:
+def conn() -> Generator[duckdb.DuckDBPyConnection, None, None]:
     c = duckdb.connect(":memory:")
     database.init_schema(c)
-    yield c  # type: ignore[misc]
+    yield c
+    c.close()
+
+
+@pytest.fixture
+def mlit_conn() -> Generator[duckdb.DuckDBPyConnection, None, None]:
+    """In-memory DuckDB with only the mlit_* schema initialised."""
+    c = duckdb.connect(":memory:")
+    mlit_database.init_schema(c)
+    yield c
     c.close()
 
 

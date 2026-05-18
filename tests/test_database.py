@@ -9,7 +9,9 @@ from skill_level.models import Industry, SkillCriterion, SkillSheet
 
 
 def _make_industry(name: str = "型枠工事業") -> Industry:
-    return Industry(name=name, category="建設業関係", zip_url="http://example.com/a.zip")
+    return Industry(
+        name=name, category="建設業関係", zip_url="http://example.com/a.zip"
+    )
 
 
 def _make_sheet(industry_id: int, unit_code: str = "06C022L11") -> SkillSheet:
@@ -85,8 +87,12 @@ class TestInsertSkillCriteria:
         ind_id = database.upsert_industry(conn, _make_industry())
         sheet_id = database.insert_skill_sheet(conn, _make_sheet(ind_id))
         criteria = [
-            SkillCriterion(category="切断", criterion_text="●点検を行う", criterion_type="●"),
-            SkillCriterion(category="切断", criterion_text="○選定ができる", criterion_type="○"),
+            SkillCriterion(
+                category="切断", criterion_text="●点検を行う", criterion_type="●"
+            ),
+            SkillCriterion(
+                category="切断", criterion_text="○選定ができる", criterion_type="○"
+            ),
         ]
         database.insert_skill_criteria(conn, sheet_id, criteria)
         count = conn.execute("SELECT COUNT(*) FROM skill_criteria").fetchone()

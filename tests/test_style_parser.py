@@ -45,7 +45,9 @@ class TestBuildUnitMap:
         assert parser.build_unit_map([]) == {}
 
     def test_multiple_style2_sheets_merged(
-        self, style2_sheet, style2_sheet_no_parens  # type: ignore[no-untyped-def]
+        self,
+        style2_sheet: _Sheet,
+        style2_sheet_no_parens: _Sheet,
     ) -> None:
         parser = StyleParser()
         unit_map = parser.build_unit_map([style2_sheet, style2_sheet_no_parens])

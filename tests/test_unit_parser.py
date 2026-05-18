@@ -36,7 +36,9 @@ class TestExcelType:
         assert result.excel_type == "A"
 
     def test_type_b_narrow(self, unit_sheet_b: _Sheet) -> None:
-        result = UnitParser().parse(unit_sheet_b, 1, "06_01_施工管理", "f.xls", _EMPTY_MAP)
+        result = UnitParser().parse(
+            unit_sheet_b, 1, "06_01_施工管理", "f.xls", _EMPTY_MAP
+        )
         assert result is not None
         assert result.excel_type == "B"
 

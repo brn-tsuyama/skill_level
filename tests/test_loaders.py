@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
 
 import pytest
 from openpyxl import Workbook
@@ -12,7 +11,7 @@ from skill_level.parser._loaders import XlsxLoader, get_loader
 
 
 @pytest.fixture
-def simple_xlsx(tmp_path: Any) -> Path:
+def simple_xlsx(tmp_path: Path) -> Path:
     wb = Workbook()
     ws = wb.active
     assert ws is not None
@@ -25,7 +24,7 @@ def simple_xlsx(tmp_path: Any) -> Path:
 
 
 @pytest.fixture
-def multi_sheet_xlsx(tmp_path: Any) -> Path:
+def multi_sheet_xlsx(tmp_path: Path) -> Path:
     wb = Workbook()
     ws1 = wb.active
     assert ws1 is not None
@@ -64,22 +63,22 @@ class TestXlsxLoader:
 
 
 class TestGetLoader:
-    def test_xlsx_extension(self, tmp_path: Any) -> None:
+    def test_xlsx_extension(self, tmp_path: Path) -> None:
         path = tmp_path / "f.xlsx"
         loader = get_loader(path)
         assert loader is not None
         assert isinstance(loader, XlsxLoader)
 
-    def test_xls_extension(self, tmp_path: Any) -> None:
+    def test_xls_extension(self, tmp_path: Path) -> None:
         path = tmp_path / "f.xls"
         loader = get_loader(path)
         assert loader is not None
 
-    def test_unknown_extension(self, tmp_path: Any) -> None:
+    def test_unknown_extension(self, tmp_path: Path) -> None:
         path = tmp_path / "f.csv"
         assert get_loader(path) is None
 
-    def test_case_insensitive(self, tmp_path: Any) -> None:
+    def test_case_insensitive(self, tmp_path: Path) -> None:
         path = tmp_path / "f.XLSX"
         loader = get_loader(path)
         assert loader is not None

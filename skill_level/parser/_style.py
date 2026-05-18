@@ -59,10 +59,13 @@ class StyleParser:
         next_idx = level_row_idx + 1
         if next_idx < sheet.nrows:
             next_row = [_cell_str(v) for v in sheet.row_values(next_idx)]
-            col_job_type = {c: v for c, v in enumerate(next_row) if v in _JOB_TYPE_SUB_ROW}
+            col_job_type = {
+                c: v for c, v in enumerate(next_row) if v in _JOB_TYPE_SUB_ROW
+            }
 
         effective: dict[int, tuple[str, str]] = {
-            c: (lv, col_job_type.get(c, default_job_type)) for c, lv in col_level.items()
+            c: (lv, col_job_type.get(c, default_job_type))
+            for c, lv in col_level.items()
         }
 
         data_start = level_row_idx + (2 if col_job_type else 1)

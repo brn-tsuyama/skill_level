@@ -89,9 +89,7 @@ class UnitParser:
                 return r
         return -1
 
-    def _extract_unit_meta(
-        self, sheet: _Sheet, header_row_idx: int
-    ) -> tuple[str, str]:
+    def _extract_unit_meta(self, sheet: _Sheet, header_row_idx: int) -> tuple[str, str]:
         unit_name = ""
         unit_summary = ""
         for r in range(header_row_idx):
